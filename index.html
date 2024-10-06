@@ -2,22 +2,45 @@
 <html>
     <head>
         <title>Euler's Method Program</title>
+        <style>
+            #options {
+                border: 1px solid black;
+                width: 30%;
+            }
+        </style>
     </head>
     <body>
         <h1>Euler's Method Program</h1>
+
         <img src="oilers.png"/>
         <p>using Euler's method to approximate first order differential equations</p>
+
         <label for="startingX">intial X value</label><br>
         <input id="startingX" type="text"><br>
+
         <label for="startingY">initial Y value</label><br>
         <input type="text" id="startingY"><br>
-        <label for="endY">end Y value</label><br>
-        <input type="text" id="endY"><br>
+        <br>
+        <div id="options">
+            <label for="endY">end Y value</label><br>
+            <input type="text" id="endY"><br>
+
+            <p> or input number of steps to be taken</p>
+
+            <label for="stepNumber">step number</label><br>
+            <input type="text" id="stepNumber"><br>
+            <br>
+        </div>
+        
+        
         <label for="stepSize">step size</label><br>
         <input type="text" id="stepSize"><br>
-        <label for="differentialEquation">differential equation in the form dy/dx = f(x,y)</label><br> <!-- need to figure out how to get this work -->
+
+        <label for="differentialEquation">differential equation in the form dy/dx = f(x,y)</label><br> 
         <input type="text" id="differentialEquation"><br>
+
         <input type="submit" value="Calculate" id="submit">
+        
         <br>
         <br>
         <h3 id="resultHeader"></h3>

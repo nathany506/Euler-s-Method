@@ -14,16 +14,19 @@ submitButton.onclick = ()=>{
     yStart = Number(document.getElementById("startingY").value);
     yEnd = Number(document.getElementById("endY").value);
     stepNumber = Number(document.getElementById("stepNumber").value);
-
+    let disable = false;
     differentialEquation = document.getElementById("differentialEquation").value;
-
-    if (typeof stepSize == 'number' && typeof xStart == 'number' && typeof yStart == 'number' && typeof yEnd == 'number' && yEnd > yStart) {
-        
+    if (typeof yEnd == 'number' && yEnd == 0 && stepNumber != 0) {
+        disable = true;
+    }
+    if (typeof stepSize == 'number' && typeof xStart == 'number' && typeof yStart == 'number' && typeof yEnd == 'number' && (yEnd > yStart || yEnd < yStart) && !disable) {
+        alert('hi')
         let results = eulerMethod(xStart,yStart,yEnd,stepSize);
 
         document.getElementById('resultHeader').innerHTML = 'Results';
         document.getElementById('results').innerHTML = ('X Value: ' + results.x + ' Y-Value: ' +   results.y + ' steps taken: ' + results.stepsTaken + ' time elapsed: ' + results.timeElapsed + 's');
     } else if (typeof stepSize == 'number' && typeof xStart == 'number' && typeof yStart == 'number' && typeof stepNumber == 'number' && stepNumber > 0 && Number.isInteger(stepNumber) ) {
+        
         let results = eulerMethodStep(xStart,yStart,stepNumber,stepSize);
         
         document.getElementById('resultHeader').innerHTML = 'Results';
@@ -41,12 +44,23 @@ function eulerMethod (xInitial, yInitial, yFin, stepSize1) { //for end condition
 
     let stepsTaken = 0;
     let startTime = new Date()
-    for (let i = 0; yI <= yFin; i++) { //end condition is currently a certain end value could
-        yI = yPrevious + findSlope(0,yPrevious)*stepSize1;
-        yPrevious = yI;
-        xValue += stepSize;
-        stepsTaken++;
+
+    if (yFin > yInitial) {
+        for (let i = 0; yI <= yFin; i++) { 
+            yI = yPrevious + findSlope(xValue,yPrevious)*stepSize1;
+            yPrevious = yI;
+            xValue += stepSize;
+            stepsTaken++;
+        }
+    } else if (yFin < yInitial) {
+        for (let i = 0; yI >= yFin; i++) { 
+            yI = yPrevious + findSlope(xValue,yPrevious)*stepSize1;
+            yPrevious = yI;
+            xValue += stepSize;
+            stepsTaken++;
+        }
     }
+    
     let endTime = new Date()
     let timeDiff = endTime - startTime;
     timeDiff /= 1000
@@ -60,8 +74,8 @@ function eulerMethodStep (xInitial,yInitial,steps,stepSize1) {
 
     let stepsTaken = 0;
     let startTime = new Date()
-    for (let i = 0; i<steps; i++) { //end condition is currently a certain end value could
-        yI = yPrevious + findSlope(0,yPrevious)*stepSize1;
+    for (let i = 0; i<steps; i++) { 
+        yI = yPrevious + findSlope(xValue,yPrevious)*stepSize1;
         yPrevious = yI;
         xValue += stepSize;
         stepsTaken++;
